@@ -1,8 +1,9 @@
 import { useParams } from "react-router-dom";
 import { useEffect, useState } from "react";
-import { getOne } from "../services/blogservice";
 import { Button } from "react-bootstrap";
-const Blog = ({ updateLikes, deleteBlog, isItSame, newComment }) => {
+import { getOne } from "../services/blogservice";
+
+function Blog({ updateLikes, deleteBlog, isItSame, newComment }) {
   const [blog, setBlog] = useState(null);
   const params = useParams();
   useEffect(() => {
@@ -40,11 +41,14 @@ const Blog = ({ updateLikes, deleteBlog, isItSame, newComment }) => {
         <p>
           <a href={blog.url}>{blog.url}</a>
         </p>
-        <div id="likeNumber">likes {blog.likes}</div>
+        <div id="likeNumber">
+          likes
+          {blog.likes}
+        </div>
         <Button onClick={updateShow} className="LikeButton">
           Like
         </Button>
-        <br></br>
+        <br />
         {isItSame(blog) ? (
           <Button
             className="DeleteButton"
@@ -74,5 +78,5 @@ const Blog = ({ updateLikes, deleteBlog, isItSame, newComment }) => {
       </div>
     </li>
   );
-};
+}
 export default Blog;

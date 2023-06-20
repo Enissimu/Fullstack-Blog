@@ -1,8 +1,9 @@
-import { getUsers } from "../services/userservice";
 import { useQuery } from "react-query";
 import { Link, Outlet } from "react-router-dom";
 import { Table } from "react-bootstrap";
-const Users = () => {
+import { getUsers } from "../services/userservice";
+
+function Users() {
   const { status, data, error } = useQuery("users", getUsers, {
     refetchOnWindowFocus: false,
   });
@@ -12,7 +13,12 @@ const Users = () => {
   }
 
   if (status === "error") {
-    return <span>Error: {error.message}</span>;
+    return (
+      <span>
+        Error:
+        {error.message}
+      </span>
+    );
   }
   return (
     <div>
@@ -28,9 +34,9 @@ const Users = () => {
         </tbody>
       </Table>
 
-      <Outlet></Outlet>
+      <Outlet />
     </div>
   );
-};
+}
 
 export default Users;

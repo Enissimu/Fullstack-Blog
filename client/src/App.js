@@ -29,7 +29,7 @@ function App() {
 
   const { status, data, error } = useQuery("blogs", getAll, {
     refetchOnWindowFocus: false,
-  }); //agagaga
+  }); // agagaga
 
   const mutationOfDeletion = useMutation(deletePost, {
     onSuccess: () => {
@@ -78,7 +78,12 @@ function App() {
   }
 
   if (status === "error") {
-    return <span>Error: {error.message}</span>;
+    return (
+      <span>
+        Error:
+        {error.message}
+      </span>
+    );
   }
 
   const createBlog = async (newBlog) => {
@@ -112,30 +117,32 @@ function App() {
   const increaseLikes = async (newBlog, id) => {
     mutationOfUpdate.mutate({ newBlog, id });
   };
-  const BiggerBlogForm = () => (
-    <div>
-      <Toggelable buttonLabel="new blog" ref={refOfBlog}>
-        <BlogForm createBlog={createBlog} />
-      </Toggelable>
+  function BiggerBlogForm() {
+    return (
       <div>
-        <Table className="table table-striped table-hover">
-          <tbody>
-            {data &&
-              data
-                .map((blog) => (
-                  <tr key={blog.id}>
-                    <td>
-                      <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
-                    </td>
-                  </tr>
-                ))
-                .slice()
-                .sort((a, b) => a.id > b.id)}
-          </tbody>
-        </Table>
+        <Toggelable buttonLabel="new blog" ref={refOfBlog}>
+          <BlogForm createBlog={createBlog} />
+        </Toggelable>
+        <div>
+          <Table className="table table-striped table-hover">
+            <tbody>
+              {data &&
+                data
+                  .map((blog) => (
+                    <tr key={blog.id}>
+                      <td>
+                        <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                      </td>
+                    </tr>
+                  ))
+                  .slice()
+                  .sort((a, b) => a.id > b.id)}
+            </tbody>
+          </Table>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 
   return (
     <div>
@@ -151,11 +158,11 @@ function App() {
           </Nav.Link>
         </Nav>
       </Navbar>
-      <LoginForm login={login} dispatchNotify={dispatch}></LoginForm>
-      {<Notification message={state} />}
+      <LoginForm login={login} dispatchNotify={dispatch} />
+      <Notification message={state} />
 
       <Routes>
-        <Route path="/" element={BiggerBlogForm()}></Route>
+        <Route path="/" element={BiggerBlogForm()} />
 
         <Route path="/blogs">
           <Route
@@ -168,15 +175,15 @@ function App() {
                 newComment={newComment}
               />
             }
-          ></Route>
+          />
         </Route>
 
         <Route path="users" element={<Users />}>
-          <Route path="/users:userId" element={<User />}></Route>
+          <Route path="/users:userId" element={<User />} />
         </Route>
       </Routes>
 
-      <div ref={bottomRef}></div>
+      <div ref={bottomRef} />
     </div>
   );
 }

@@ -1,4 +1,5 @@
 import axios from "axios";
+
 const baseUrl = "/api/blogs";
 
 let token = null;
@@ -18,11 +19,11 @@ export const getOne = async (id) => {
 };
 
 export const sendComment = async ({ comm, id }) => {
-  const uriel = baseUrl + "/" + id + "/comments";
+  const uriel = `${baseUrl}/${id}/comments`;
   const response = await axios.post(
     uriel,
     {
-      comm: comm,
+      comm,
     },
     {
       headers: {
@@ -52,7 +53,7 @@ export const sendBlog = async (newBlog) => {
 export const updateLikes = async ({ newBlog, id }) => {
   const response = await axios({
     method: "put",
-    url: baseUrl + "/" + id,
+    url: `${baseUrl}/${id}`,
     data: newBlog,
     headers: {
       Authorization: token,
@@ -66,7 +67,7 @@ export const updateLikes = async ({ newBlog, id }) => {
 export const deletePost = async (id) => {
   const response = await axios({
     method: "delete",
-    url: baseUrl + "/" + id,
+    url: `${baseUrl}/${id}`,
     headers: {
       Authorization: token,
       "Access-Control-Allow-Headers": "Authorization",

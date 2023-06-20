@@ -14,11 +14,9 @@ const Toggelable = forwardRef((props, ref) => {
 
   useImperativeHandle(
     ref,
-    () => {
-      return {
-        changeVisible,
-      };
-    },
+    () => ({
+      changeVisible,
+    }),
     // eslint-disable-next-line react-hooks/exhaustive-deps
     []
   );

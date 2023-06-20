@@ -4,7 +4,7 @@ import { changeNote } from "../components/notifications";
 import userReducer from "../reducers/userReducer";
 import { setToken } from "../services/blogservice";
 
-const LoginForm = ({ login, dispatchNotify }) => {
+function LoginForm({ login, dispatchNotify }) {
   const [username, SetUsername] = useState("");
   const [password, SetPassword] = useState("");
   const [user, dispatch] = useReducer(userReducer, null);
@@ -19,7 +19,7 @@ const LoginForm = ({ login, dispatchNotify }) => {
     if (jsonUser) {
       const user = JSON.parse(jsonUser);
       setToken(user.token);
-      dispatch({ type: "Log_User", user: user });
+      dispatch({ type: "Log_User", user });
     }
   }, []);
 
@@ -27,7 +27,7 @@ const LoginForm = ({ login, dispatchNotify }) => {
     event.preventDefault();
     try {
       const user = await login({ username, password });
-      dispatch({ type: "Log_User", user: user });
+      dispatch({ type: "Log_User", user });
       window.localStorage.setItem("loggedUser", JSON.stringify(user));
     } catch (err) {
       changeNote(err, dispatchNotify);
@@ -38,7 +38,10 @@ const LoginForm = ({ login, dispatchNotify }) => {
     <div>
       {user !== null ? (
         <div>
-          <p>welcome back {user.name}</p>
+          <p>
+            welcome back
+            {user.name}
+          </p>
           <Button className="LogoutButton" onClick={handleLogout}>
             Log Out
           </Button>
@@ -53,7 +56,7 @@ const LoginForm = ({ login, dispatchNotify }) => {
               value={username}
               id="UsernameInput"
               onChange={({ target }) => SetUsername(target.value)}
-            ></Form.Control>
+            />
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Password</Form.Label>
@@ -63,7 +66,7 @@ const LoginForm = ({ login, dispatchNotify }) => {
               value={password}
               id="PasswordInput"
               onChange={({ target }) => SetPassword(target.value)}
-            ></Form.Control>
+            />
           </Form.Group>
           <Button type="submit" id="loginButton">
             Login
@@ -72,6 +75,6 @@ const LoginForm = ({ login, dispatchNotify }) => {
       )}
     </div>
   );
-};
+}
 
 export default LoginForm;
