@@ -14,5 +14,11 @@ jobs:
       - uses: actions/setup-node@v3
         with:
           node-version: "16"
-      - name: folder context
-        run: ls
+      - name: Install client dependencies
+        run: cd client && npm install
+      - name: Check client test style
+        run: npm run eslint
+      - name: build
+        run: npm run build
+      - name: test client
+        run: npm run test
