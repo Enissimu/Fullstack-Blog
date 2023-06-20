@@ -19,10 +19,10 @@ jobs:
         with:
           node-version: "16"
       - name: Install client dependencies,Build,lint,test
-        run: cd client
-          npm install
-          npm run eslint
-          npm run test
+        run: cd client &&
+          npm install &&
+          npm run eslint &&
+          npm run test &&
           npm run build
 
   #     - name: e2e tests
