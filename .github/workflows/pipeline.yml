@@ -27,7 +27,8 @@ jobs:
         run: cd server &&
           npm install &&
           npm run copy:ui
-      - name: deploy to fly
+      - name: cd server &&
+          deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master
       - run: flyctl deploy --remote-only
         env:
