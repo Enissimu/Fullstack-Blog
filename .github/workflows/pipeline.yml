@@ -27,11 +27,17 @@ jobs:
         run: cd server &&
           npm install &&
           npm run copy:ui
-      - name: deploy to fly
-        uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: cd server && flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: e2e tests
+        uses: cypress-io/github-action@v5
+        with:
+          command: cd client && npm run test:e2e
+          start: cd server && npm run smallDev
+          wait-on: http://localhost:3003
+      # - name: deploy to fly
+      #   uses: superfly/flyctl-actions/setup-flyctl@master
+      # - run: cd server && flyctl deploy --remote-only
+      #   env:
+      #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
   #     - name: e2e tests
   #       uses: cypress-io/github-action@v5

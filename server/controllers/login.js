@@ -5,30 +5,30 @@ const User=require('../models/user')
 
 
 
-loginRouter.post('/',async(request,response)=>{
-    const {username,password}=request.body
+loginRouter.post('/',async(request,response) => {
+  const { username,password }=request.body
 
-    const user=await User.findOne({username})
+  const user=await User.findOne({ username })
 
-    const isPasswordCorrect=user===null
+  const isPasswordCorrect=user===null
     ?false
     :await bcrypt.compare(password,user.passwordHash)
-   
-    if(!(user &&isPasswordCorrect)){
-        return response.status(401)
-        .json({error:'invalid username or password'})
-    }
 
-    const userForToken={
-        username:user.username,
-        id:user._id
-    }
+  if(!(user &&isPasswordCorrect)){
+    return response.status(401)
+      .json({ error:'invalid username or password' })
+  }
 
-    const token=jwt.sign(userForToken,
-        process.env.REACT_APP_SECRET)
+  const userForToken={
+    username:user.username,
+    id:user._id
+  }
 
-    return response.status(200)
-    .send({token, username:user.username, name:user.name})
+  const token=jwt.sign(userForToken,
+    process.env.REACT_APP_SECRET)
+
+  return response.status(200)
+    .send({ token, username:user.username, name:user.name })
 
 })
 

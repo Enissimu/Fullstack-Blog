@@ -1,25 +1,27 @@
-import { useParams } from "react-router-dom";
-import { useEffect, useState } from "react";
-import { Button } from "react-bootstrap";
-import { getOne } from "../services/blogservice";
+import { useParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { Button } from 'react-bootstrap'
+import { getOne } from '../services/blogservice'
 
-function Blog({ updateLikes, deleteBlog, isItSame, newComment }) {
-  const [blog, setBlog] = useState(null);
-  const params = useParams();
+function Blog({
+  updateLikes, deleteBlog, isItSame, newComment,
+}) {
+  const [blog, setBlog] = useState(null)
+  const params = useParams()
   useEffect(() => {
-    getOne(params.blogId).then((blog) => setBlog(blog));
-  }, [params]);
+    getOne(params.blogId).then((blog) => setBlog(blog))
+  }, [params])
 
   if (!blog) {
-    return null;
+    return null
   }
 
   const postComment = async (event) => {
-    event.preventDefault();
-    const comm = event.target.comm.value;
-    event.target.comm.value = "";
-    await newComment(comm, blog.id);
-  };
+    event.preventDefault()
+    const comm = event.target.comm.value
+    comm.value = ''
+    await newComment(comm, blog.id)
+  }
 
   const updateShow = async () => {
     const updatedBlog = {
@@ -27,17 +29,19 @@ function Blog({ updateLikes, deleteBlog, isItSame, newComment }) {
       url: blog.url,
       author: blog.author,
       likes: blog.likes,
-    };
-    await updateLikes(updatedBlog, blog.id);
-  };
+    }
+    await updateLikes(updatedBlog, blog.id)
+  }
   const deleteShow = async () => {
-    await deleteBlog(blog.id);
-  };
+    await deleteBlog(blog.id)
+  }
 
   return (
     <li className="Blog">
       <div>
-        {blog.title} {blog.author}
+        {blog.title}
+        {' '}
+        {blog.author}
         <p>
           <a href={blog.url}>{blog.url}</a>
         </p>
@@ -57,13 +61,11 @@ function Blog({ updateLikes, deleteBlog, isItSame, newComment }) {
           >
             delete
           </Button>
-        ) : (
-          <></>
-        )}
+        ) : <>  </> }
         <div>
           <ul>
-            {blog.comm.map((commw, index) => (
-              <li key={index}>
+            {blog.comm.map((commw) => (
+              <li key={commw}>
                 <p>{commw}</p>
               </li>
             ))}
@@ -77,6 +79,6 @@ function Blog({ updateLikes, deleteBlog, isItSame, newComment }) {
         </form>
       </div>
     </li>
-  );
+  )
 }
-export default Blog;
+export default Blog

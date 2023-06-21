@@ -1,24 +1,24 @@
-import { useQuery } from "react-query";
-import { Link, Outlet } from "react-router-dom";
-import { Table } from "react-bootstrap";
-import { getUsers } from "../services/userservice";
+import { useQuery } from 'react-query'
+import { Link, Outlet } from 'react-router-dom'
+import { Table } from 'react-bootstrap'
+import { getUsers } from '../services/userservice'
 
 function Users() {
-  const { status, data, error } = useQuery("users", getUsers, {
+  const { status, data, error } = useQuery('users', getUsers, {
     refetchOnWindowFocus: false,
-  });
+  })
 
-  if (status === "loading") {
-    return <span>Loading...</span>;
+  if (status === 'loading') {
+    return <span>Loading...</span>
   }
 
-  if (status === "error") {
+  if (status === 'error') {
     return (
       <span>
         Error:
         {error.message}
       </span>
-    );
+    )
   }
   return (
     <div>
@@ -36,7 +36,7 @@ function Users() {
 
       <Outlet />
     </div>
-  );
+  )
 }
 
-export default Users;
+export default Users

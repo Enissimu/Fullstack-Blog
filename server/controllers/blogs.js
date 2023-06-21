@@ -1,26 +1,26 @@
-const blogrouter = require("express").Router();
-const Blog = require("../models/blog");
-const middleware = require("../Utils/middleware");
+const blogrouter = require('express').Router()
+const Blog = require('../models/blog')
+const middleware = require('../Utils/middleware')
 
-blogrouter.get("/", async (request, response) => {
-  const blogs = await Blog.find({}).populate("user", { blogs: 0 });
-  response.json(blogs);
-});
+blogrouter.get('/', async (request, response) => {
+  const blogs = await Blog.find({}).populate('user', { blogs: 0 })
+  response.json(blogs)
+})
 
-blogrouter.get("/:id", async (request, response) => {
-  const blog = await Blog.findById(request.params.id).populate("user");
-  response.json(blog);
-});
+blogrouter.get('/:id', async (request, response) => {
+  const blog = await Blog.findById(request.params.id).populate('user')
+  response.json(blog)
+})
 
-blogrouter.post("/", middleware.userExtractor, async (request, response) => {
-  const body = request.body;
+blogrouter.post('/', middleware.userExtractor, async (request, response) => {
+  const body = request.body
 
-  const user = request.user;
+  const user = request.user
 
-  console.log(request.token, "tokken3");
+  console.log(request.token, 'tokken3')
 
-  if (body.hasOwnProperty("likes") === false) {
-    body["likes"] = 0;
+  if (!body.likes) {
+    body['likes'] = 0
   }
   const NewBlog = new Blog({
     author: body.author,
@@ -29,63 +29,63 @@ blogrouter.post("/", middleware.userExtractor, async (request, response) => {
     url: body.url,
     user: user,
     comments: {},
-  });
-  console.log(request.token, "tokken2");
+  })
+  console.log(request.token, 'tokken2')
 
-  const result = await NewBlog.save();
-  user.blogs = user.blogs.concat(result._id);
-  await user.save();
-  console.log(request.token, "tokken1");
+  const result = await NewBlog.save()
+  user.blogs = user.blogs.concat(result._id)
+  await user.save()
+  console.log(request.token, 'tokken1')
 
-  response.status(201).json(result);
-});
+  response.status(201).json(result)
+})
 
 blogrouter.delete(
-  "/:id",
+  '/:id',
   middleware.userExtractor,
   async (request, response) => {
-    const blogId = request.params.id;
-    const blog = await Blog.findById(blogId);
+    const blogId = request.params.id
+    const blog = await Blog.findById(blogId)
 
-    const user = request.user;
+    const user = request.user
     if (user.id !== blog.user.toString()) {
-      return response.status(403).json({ error: "You are forbidden." });
+      return response.status(403).json({ error: 'You are forbidden.' })
     }
-    await Blog.findByIdAndDelete(blogId);
+    await Blog.findByIdAndDelete(blogId)
 
-    response.status(204).end();
+    response.status(204).end()
   }
-);
+)
 blogrouter.post(
-  "/:id/comments",
+  '/:id/comments',
   middleware.userExtractor,
   async (request, response) => {
-    const blogId = request.params.id;
-    const blog = await Blog.findById(blogId);
-    const newComments = blog.comm;
+    const blogId = request.params.id
+    const blog = await Blog.findById(blogId)
+    const newComments = blog.comm
     if (!newComments) {
       const comment = await Blog.findByIdAndUpdate(blogId, {
         comm: request.body.comm,
-      });
-      response.status(204).json(comment).end();
+      })
+      response.status(204).json(comment).end()
     } else {
-      newComments.push(request.body.comm);
-      console.log(newComments);
+      newComments.push(request.body.comm)
+      console.log(newComments)
       const comment = await Blog.findByIdAndUpdate(blogId, {
         comm: newComments,
-      });
+      })
 
-      response.status(204).json(comment);
+      response.status(204).json(comment)
     }
   }
-);
+)
 
-blogrouter.put("/:id", middleware.userExtractor, async (request, response) => {
-  console.log(request.token, "tokken");
+blogrouter.put('/:id', middleware.userExtractor, async (request, response) => {
+  console.log(request.token, 'tokken')
   await Blog.findByIdAndUpdate(request.params.id, {
     likes: request.body.likes + 1,
-  });
-  response.status(204);
-});
+  })
+  response.status(204)
+})
 
-module.exports = blogrouter;
+module.exports = blogrouter

@@ -1,25 +1,25 @@
-import { useState } from "react";
-import { Button, Form } from "react-bootstrap";
+import { useState } from 'react'
+import { Button, Form } from 'react-bootstrap'
 
 function BlogForm({ createBlog }) {
   const [newBlog, SetnewBlog] = useState({
-    title: "",
-    url: "",
-    author: "",
-  });
+    title: '',
+    url: '',
+    author: '',
+  })
 
   const handleNewBlog = async (event) => {
-    event.preventDefault();
-    await createBlog(newBlog);
-    event.target.reset();
-  };
+    event.preventDefault()
+    await createBlog(newBlog)
+    event.target.reset()
+  }
 
   const handleChange = (event) => {
     SetnewBlog({
       ...newBlog,
       [event.target.name]: event.target.value,
-    });
-  };
+    })
+  }
 
   return (
     <div>
@@ -53,7 +53,7 @@ function BlogForm({ createBlog }) {
         </Button>
       </Form>
     </div>
-  );
+  )
 }
 
-export default BlogForm;
+export default BlogForm
