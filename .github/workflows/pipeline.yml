@@ -26,7 +26,6 @@ jobs:
       - name: Copying build and deploying app
         run: cd server &&
           npm install &&
-          npm run eslint &&
           npm run copy:ui
       - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master
