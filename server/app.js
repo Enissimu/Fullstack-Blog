@@ -2,7 +2,7 @@ const express = require('express')
 require('express-async-errors')
 const app = express()
 const cors = require('cors')
-const { mongoUrl } = require('./Utils/config')
+const { ENV, mongoUrl } = require('./Utils/config')
 const logger = require('./Utils/logger')
 const {
   unkownendpoint,
@@ -34,6 +34,13 @@ app.use(tokenExtractor)
 app.use('/api/blogs', blogrouter)
 app.use('/api/users', usersRouter)
 app.use('/api/login', loginRouter)
+
+if(ENV === 'test'){
+  console.log(ENV,'AHAHAH')
+
+  const testingRouter=require('./controllers/testing')
+  app.use('/api/testing',testingRouter)
+}
 
 app.use(unkownendpoint)
 app.use(errorhandler)
