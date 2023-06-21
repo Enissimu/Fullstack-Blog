@@ -27,10 +27,9 @@ jobs:
         run: cd server &&
           npm install &&
           npm run copy:ui
-      - name: cd server &&
-          deploy to fly
+      - name: deploy to fly
         uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: flyctl deploy --remote-only
+      - run: cd server && flyctl deploy --remote-only
         env:
           FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
