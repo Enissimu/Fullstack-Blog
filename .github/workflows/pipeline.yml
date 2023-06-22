@@ -30,6 +30,7 @@ jobs:
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
+          project: ./client
           command: cd client && npm run test:e2e
           start: npm run test
           wait-on: http://localhost:5000
