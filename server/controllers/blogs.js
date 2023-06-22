@@ -81,10 +81,10 @@ blogrouter.post(
 )
 
 blogrouter.put('/:id', middleware.userExtractor, async (request, response) => {
-  console.log(request.token, 'tokken')
   await Blog.findByIdAndUpdate(request.params.id, {
     likes: request.body.likes + 1,
   })
+  console.log(request.body.likes)
   response.status(204)
 })
 
