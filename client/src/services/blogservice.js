@@ -1,25 +1,25 @@
-import axios from "axios";
+import axios from 'axios'
 
-const baseUrl = "/api/blogs";
+const baseUrl = '/api/blogs'
 
-let token = null;
+let token = null
 
 export const setToken = (tokenparam) => {
-  token = `Bearer ${tokenparam}`;
-};
+  token = `Bearer ${tokenparam}`
+}
 
 export const getAll = async () => {
-  const response = await axios.get(baseUrl);
-  return response.data;
-};
+  const response = await axios.get(baseUrl)
+  return response.data
+}
 
 export const getOne = async (id) => {
-  const response = await axios.get(`${baseUrl}/${id}`);
-  return response.data;
-};
+  const response = await axios.get(`${baseUrl}/${id}`)
+  return response.data
+}
 
 export const sendComment = async ({ comm, id }) => {
-  const uriel = `${baseUrl}/${id}/comments`;
+  const uriel = `${baseUrl}/${id}/comments`
   const response = await axios.post(
     uriel,
     {
@@ -28,51 +28,51 @@ export const sendComment = async ({ comm, id }) => {
     {
       headers: {
         Authorization: token,
-        "Access-Control-Allow-Headers": "Authorization",
-        "Content-Type": "application/json",
+        'Access-Control-Allow-Headers': 'Authorization',
+        'Content-Type': 'application/json',
       },
-    }
-  );
+    },
+  )
 
-  return response.data;
-};
+  return response.data
+}
 export const sendBlog = async (newBlog) => {
   const response = await axios({
-    method: "post",
+    method: 'post',
     url: baseUrl,
     data: newBlog,
     headers: {
       Authorization: token,
-      "Access-Control-Allow-Headers": "Authorization",
-      "Content-Type": "application/json",
+      'Access-Control-Allow-Headers': 'Authorization',
+      'Content-Type': 'application/json',
     },
-  });
-  return response.data;
-};
+  })
+  return response.data
+}
 
 export const updateLikes = async ({ newBlog, id }) => {
   const response = await axios({
-    method: "put",
+    method: 'put',
     url: `${baseUrl}/${id}`,
     data: newBlog,
     headers: {
       Authorization: token,
-      "Access-Control-Allow-Headers": "Authorization",
-      "Content-Type": "application/json",
+      'Access-Control-Allow-Headers': 'Authorization',
+      'Content-Type': 'application/json',
     },
-  });
-  return response.data;
-};
+  })
+  return response.data
+}
 
 export const deletePost = async (id) => {
   const response = await axios({
-    method: "delete",
+    method: 'delete',
     url: `${baseUrl}/${id}`,
     headers: {
       Authorization: token,
-      "Access-Control-Allow-Headers": "Authorization",
-      "Content-Type": "application/json",
+      'Access-Control-Allow-Headers': 'Authorization',
+      'Content-Type': 'application/json',
     },
-  });
-  return response.data;
-};
+  })
+  return response.data
+}

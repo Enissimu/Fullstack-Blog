@@ -1,12 +1,12 @@
 const notificatReducer = (state, action) => {
   switch (action.type) {
-    case "CHANGE":
-      return action.msg;
-    case "RESET":
-      return null;
+    case 'CHANGE':
+      return action.msg
+    case 'RESET':
+      return null
     default:
-      return state;
+      return state
   }
-};
+}
 
-export default notificatReducer;
+export default notificatReducer

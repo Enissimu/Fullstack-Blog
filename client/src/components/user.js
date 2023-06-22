@@ -1,15 +1,15 @@
-import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { getUser } from "../services/userservice";
+import { useState, useEffect } from 'react'
+import { useParams } from 'react-router-dom'
+import { getUser } from '../services/userservice'
 
-export function User() {
-  const [user, setUser] = useState(null);
-  const params = useParams();
+function User() {
+  const [user, setUser] = useState(null)
+  const params = useParams()
   useEffect(() => {
-    getUser(params.userId).then((user) => setUser(user));
-  }, [params]);
+    getUser(params.userId).then((user) => setUser(user))
+  }, [params])
   if (!user) {
-    return null;
+    return null
   }
   return (
     <div>
@@ -21,5 +21,7 @@ export function User() {
         <p key={blog.id}>{blog.title}</p>
       ))}
     </div>
-  );
+  )
 }
+
+export default User

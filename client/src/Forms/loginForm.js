@@ -1,38 +1,38 @@
-import { useState, useEffect, useReducer } from "react";
-import { Button, Form } from "react-bootstrap";
-import { changeNote } from "../components/notifications";
-import userReducer from "../reducers/userReducer";
-import { setToken } from "../services/blogservice";
+import { useState, useEffect, useReducer } from 'react'
+import { Button, Form } from 'react-bootstrap'
+import { changeNote } from '../components/notifications'
+import userReducer from '../reducers/userReducer'
+import { setToken } from '../services/blogservice'
 
 function LoginForm({ login, dispatchNotify }) {
-  const [username, SetUsername] = useState("");
-  const [password, SetPassword] = useState("");
-  const [user, dispatch] = useReducer(userReducer, null);
+  const [username, SetUsername] = useState('')
+  const [password, SetPassword] = useState('')
+  const [user, dispatch] = useReducer(userReducer, null)
 
   const handleLogout = () => {
-    dispatch({ type: "Log_Out_User" });
-    localStorage.clear("loggedUser");
-  };
+    dispatch({ type: 'Log_Out_User' })
+    localStorage.clear('loggedUser')
+  }
 
   useEffect(() => {
-    const jsonUser = window.localStorage.getItem("loggedUser");
+    const jsonUser = window.localStorage.getItem('loggedUser')
     if (jsonUser) {
-      const user = JSON.parse(jsonUser);
-      setToken(user.token);
-      dispatch({ type: "Log_User", user });
+      const user = JSON.parse(jsonUser)
+      setToken(user.token)
+      dispatch({ type: 'Log_User', user })
     }
-  }, []);
+  }, [])
 
   const HandleLogin = async (event) => {
-    event.preventDefault();
+    event.preventDefault()
     try {
-      const user = await login({ username, password });
-      dispatch({ type: "Log_User", user });
-      window.localStorage.setItem("loggedUser", JSON.stringify(user));
+      const user = await login({ username, password })
+      dispatch({ type: 'Log_User', user })
+      window.localStorage.setItem('loggedUser', JSON.stringify(user))
     } catch (err) {
-      changeNote(err, dispatchNotify);
+      changeNote(err, dispatchNotify)
     }
-  };
+  }
 
   return (
     <div>
@@ -74,7 +74,7 @@ function LoginForm({ login, dispatchNotify }) {
         </Form>
       )}
     </div>
-  );
+  )
 }
 
-export default LoginForm;
+export default LoginForm
