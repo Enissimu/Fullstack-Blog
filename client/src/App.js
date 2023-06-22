@@ -107,6 +107,7 @@ function App() {
   }
 
   const deleteThepost = async (id) => {
+    // eslint-disable-next-line no-alert
     if (window.confirm('Do you wanna delete?')) {
       mutationOfDeletion.mutate(id)
     }

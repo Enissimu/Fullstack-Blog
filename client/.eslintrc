@@ -8,6 +8,7 @@
     "jest": true
   },
   "rules": {
+    "react/prop-types": "off",
     // suppress errors for missing 'import React' in files
     "react/react-in-jsx-scope": "off",
     // allow jsx syntax in js files (for next.js project)
@@ -31,11 +32,5 @@
     "no-shadow": 0,
     "no-plusplus": 0,
     "import/no-unresolved": "off",
-    "react/prop-types": [
-      1,
-      {
-        "skipUndeclared": true
-      }
-    ]
   }
 }
