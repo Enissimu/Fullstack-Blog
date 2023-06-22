@@ -30,9 +30,9 @@ jobs:
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
-          project: ./client
-          command: cd client && npm run test:e2e
-          start: npm run test
+          working-directory: client
+          command: npm run test:e2e
+          start: npm run test:backend
           wait-on: http://localhost:5000
       # - name: deploy to fly
       #   uses: superfly/flyctl-actions/setup-flyctl@master
