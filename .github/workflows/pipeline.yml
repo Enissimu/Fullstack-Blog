@@ -23,7 +23,7 @@ jobs:
           npm install &&
           npm run eslint &&
           npm run build
-      - name: Copying build and deploying app
+      - name: Copying build 
         run: cd server &&
           npm install &&
           npm run copy:ui
@@ -32,7 +32,7 @@ jobs:
         with:
           command: cd client && npm run test:e2e
           start: cd server && npm run smallDev
-          wait-on: http://localhost:3003
+          wait-on: http://localhost:5000
       # - name: deploy to fly
       #   uses: superfly/flyctl-actions/setup-flyctl@master
       # - run: cd server && flyctl deploy --remote-only
