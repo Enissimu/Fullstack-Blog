@@ -10,7 +10,7 @@ function Blog({
   const params = useParams()
   useEffect(() => {
     getOne(params.blogId).then((blog) => setBlog(blog))
-  }, [params])
+  }, [params, blog])
 
   if (!blog) {
     return null
@@ -19,7 +19,6 @@ function Blog({
   const postComment = async (event) => {
     event.preventDefault()
     const comm = event.target.comm.value
-    comm.value = ''
     await newComment(comm, blog.id)
   }
 
@@ -47,6 +46,8 @@ function Blog({
         </p>
         <div id="likeNumber">
           likes
+          {' '}
+
           {blog.likes}
         </div>
         <Button onClick={updateShow} className="LikeButton">

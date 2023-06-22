@@ -31,7 +31,7 @@ function App() {
 
   const { status, data, error } = useQuery('blogs', getAll, {
     refetchOnWindowFocus: false,
-  }) // agagaga
+  })
 
   const mutationOfDeletion = useMutation(deletePost, {
     onSuccess: () => {
