@@ -19,7 +19,7 @@ function BiggerBlogForm(createBlog, refOfBlog, data) {
                               .map((blog) => (
                                 <tr key={blog.id}>
                                   <td>
-                                    <Link to={`/blogs/${blog.id}`}>{blog.title}</Link>
+                                    <Link className="BlogButton" to={`/blogs/${blog.id}`}>{blog.title}</Link>
                                   </td>
                                 </tr>
                               ))

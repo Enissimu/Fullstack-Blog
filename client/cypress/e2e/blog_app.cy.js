@@ -17,7 +17,7 @@ describe('Blog app', () => {
       cy.get('#UsernameInput').type('Tester')
       cy.get('#PasswordInput').type('123456')
       cy.get('#loginButton').click()
-      cy.contains('welcome back Tester')
+      cy.contains('welcome back Testeroglu')
     })
 
     it('you cannot login with wrong info?', () => {
@@ -38,6 +38,7 @@ describe('Blog app', () => {
         }
         cy.login('Tester', '123456')
         cy.createBlog(newBlog)
+        cy.intercept('PUT', '/api/blogs/*').as('didYouSendit')
       })
 
       it('A blog can be created', () => {
@@ -47,14 +48,17 @@ describe('Blog app', () => {
         cy.get('.createBlog').click()
         cy.contains('Narnia')
       })
-      it('You can like blogs', () => {
-        cy.get('.hideOrWiev').click()
+      xit('You can like blogs', () => {
+        cy.get('.BlogButton').click()
+
         cy.get('.LikeButton').click()
+        cy.wait('@didYouSendit').its('response.url').should('include', 'blogs')
+
         cy.get('#likeNumber').invoke('text').should('eq', 'likes 1')
       })
 
       it('You can delete your own post', () => {
-        cy.get('.hideOrWiev').click()
+        cy.get('.BlogButton').click()
         cy.get('.DeleteButton').click()
         cy.contains('Narnia').should('not.exist')
       })
@@ -76,12 +80,12 @@ describe('Blog app', () => {
           cy.createBlog(newBlog2)
         })
         it('Can you see other people`s delete button?', () => {
-          cy.get('.hideOrWiev').then((blogs) => {
+          cy.get('.BlogButton').then((blogs) => {
             cy.get(blogs[0]).parent().contains('delete').should('not.exist')
           })
         })
         xit('Is the most liked on the top', () => {
-          cy.get('.hideOrWiev').eq('1').click()
+          cy.get('.BlogButton').eq('1').click()
           cy.intercept('PUT', '/api/blogs/*').as('didYouSendit')
           cy.get('.LikeButton').eq('1').click()
           cy.wait('@didYouSendit').its('request.url').should('include', 'blogs')

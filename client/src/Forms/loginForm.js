@@ -40,6 +40,7 @@ function LoginForm({ login, dispatchNotify }) {
         <div>
           <p>
             welcome back
+            {' '}
             {user.name}
           </p>
           <Button className="LogoutButton" onClick={handleLogout}>
