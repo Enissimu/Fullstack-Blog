@@ -27,16 +27,12 @@ jobs:
         run: cd server &&
           npm install &&
           npm run copy:ui
-      - name: create env file
-        run: |
-
-
       - name: start Backend
         run: |
             cd server 
             touch .env
             echo REACT_APP_TEST_MONGODB_URI=${{ secrets.REACT_APP_TEST_MONGODB_URI }} >> .env
-            npm run smallDev
+            npm run smallDev &
         env:
             REACT_APP_TEST_MONGODB_URI: ${{ secrets.REACT_APP_TEST_MONGODB_URI }}
 
