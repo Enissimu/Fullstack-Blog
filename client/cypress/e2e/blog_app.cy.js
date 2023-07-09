@@ -38,7 +38,6 @@ describe('Blog app', () => {
         }
         cy.login('Tester', '123456')
         cy.createBlog(newBlog)
-        cy.intercept('PUT', '/api/blogs/*').as('didYouSendit')
       })
 
       it('A blog can be created', () => {
@@ -48,13 +47,15 @@ describe('Blog app', () => {
         cy.get('.createBlog').click()
         cy.contains('Narnia')
       })
-      xit('You can like blogs', () => {
+      it('You can like blogs', () => {
         cy.get('.BlogButton').click()
 
         cy.get('.LikeButton').click()
-        cy.wait('@didYouSendit').its('response.url').should('include', 'blogs')
+        cy.get('#likeNumber').contains('likes 0')
+        cy.visit('')
 
-        cy.get('#likeNumber').invoke('text').should('eq', 'likes 1')
+        cy.get('.BlogButton').click()
+        cy.get('#likeNumber').contains('likes 1')
       })
 
       it('You can delete your own post', () => {
@@ -73,7 +74,7 @@ describe('Blog app', () => {
           cy.visit('')
           const newBlog2 = {
             title: 'IKINCIBLOG',
-            url: 'ZORTORT',
+            url: 'www.google.com',
             author: 'agabune',
           }
           cy.login('Tester2', '1234567')
@@ -85,18 +86,17 @@ describe('Blog app', () => {
           })
         })
         xit('Is the most liked on the top', () => {
+          cy.get('.BlogButton').eq('1').contains('IKINCIBLOG')
+          cy.get('.BlogButton').eq('0').contains('AGA')
+
           cy.get('.BlogButton').eq('1').click()
-          cy.intercept('PUT', '/api/blogs/*').as('didYouSendit')
-          cy.get('.LikeButton').eq('1').click()
-          cy.wait('@didYouSendit').its('request.url').should('include', 'blogs')
-          cy.intercept('GET', '/api/blogs').as('didYouGetit')
+          cy.get('.LikeButton').click()
           cy.visit('')
-          cy.wait('@didYouGetit').its('request.url').should('include', 'blogs')
-          cy.get('.Blog').eq('1').contains('likes 1')
-          cy.get('.Blog').eq('0').contains('likes 0')
           cy.reload()
-          cy.get('.Blog').eq('1').contains('IKINCIBLOG')
-          cy.get('.Blog').eq('0').contains('AGA')
+          cy.visit('')
+
+          cy.get('.BlogButton').eq('1').contains('IKINCIBLOG')
+          cy.get('.BlogButton').eq('0').contains('AGA')
         })
       })
     })

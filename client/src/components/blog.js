@@ -10,8 +10,7 @@ function Blog({
   const params = useParams()
   useEffect(() => {
     getOne(params.blogId).then((blog) => setBlog(blog))
-  }, [params, blog])
-
+  }, [])
   if (!blog) {
     return null
   }
@@ -29,7 +28,12 @@ function Blog({
       author: blog.author,
       likes: blog.likes,
     }
-    await updateLikes(updatedBlog, blog.id)
+    try {
+      await updateLikes(updatedBlog, blog.id)
+      setBlog({ ...blog, likes: blog.likes + 1 })
+    } catch (error) {
+      console.log(error)
+    }
   }
   const deleteShow = async () => {
     await deleteBlog(blog.id)
@@ -42,7 +46,7 @@ function Blog({
         {' '}
         {blog.author}
         <p>
-          <a href={blog.url}>{blog.url}</a>
+          <a href={`https://${blog.url}`}>{blog.url}</a>
         </p>
         <div id="likeNumber">
           likes

@@ -29,9 +29,7 @@ function App() {
   const [state, dispatch] = useReducer(notificatReducer, null)
   const queryClient = useQueryClient()
 
-  const { status, data, error } = useQuery('blogs', getAll, {
-    refetchOnWindowFocus: false,
-  })
+  const { status, data, error } = useQuery('blogs', getAll)
 
   const mutationOfDeletion = useMutation(deletePost, {
     onSuccess: () => {
