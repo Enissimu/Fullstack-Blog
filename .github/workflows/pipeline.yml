@@ -35,18 +35,18 @@ jobs:
             npm run smallDev &
         env:
             REACT_APP_TEST_MONGODB_URI: ${{ secrets.REACT_APP_TEST_MONGODB_URI }}
-            REACT_APP_SECRET :  ${{ secrets.REACT_APP_SECRET}}
+            REACT_APP_SECRET : ${{ secrets.REACT_APP_SECRET}}
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
            working-directory: client
            command: npm run test:e2e
            wait-on: http://localhost:5000
-      # - name: deploy to fly
-      #   uses: superfly/flyctl-actions/setup-flyctl@master
-      # - run: cd server && flyctl deploy --remote-only
-      #   env:
-      #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+      - name: deploy to fly
+        uses: superfly/flyctl-actions/setup-flyctl@master
+      - run: cd server && flyctl deploy --remote-only
+        env:
+         FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
 
 
   tag_release:
