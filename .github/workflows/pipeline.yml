@@ -29,13 +29,16 @@ jobs:
           npm run copy:ui
       - name: create env file
         run: |
-          cd server 
-          touch .env
-          echo REACT_APP_TEST_MONGODB_URI=${{ secrets.REACT_APP_TEST_MONGODB_URI }} >> .env
+
 
       - name: start Backend
-        run: cd server &&
-              npm run smallDev
+        run: |
+            cd server 
+            touch .env
+            echo REACT_APP_TEST_MONGODB_URI=${{ secrets.REACT_APP_TEST_MONGODB_URI }} >> .env
+            npm run smallDev
+        env:
+            REACT_APP_TEST_MONGODB_URI: ${{ secrets.REACT_APP_TEST_MONGODB_URI }}
 
       - name: e2e tests
         uses: cypress-io/github-action@v5
