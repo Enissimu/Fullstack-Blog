@@ -31,7 +31,7 @@ jobs:
         run: |
           cd server 
           touch .env
-          echo ENGINE_API_KEY=${{ secrets.REACT_APP_TEST_MONGODB_URI }} >> .env
+          echo REACT_APP_TEST_MONGODB_URI=${{ secrets.REACT_APP_TEST_MONGODB_URI }} >> .env
 
       - name: start Backend
         run: cd server &&
