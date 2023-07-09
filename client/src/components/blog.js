@@ -28,12 +28,8 @@ function Blog({
       author: blog.author,
       likes: blog.likes,
     }
-    try {
-      await updateLikes(updatedBlog, blog.id)
-      setBlog({ ...blog, likes: blog.likes + 1 })
-    } catch (error) {
-      console.log(error)
-    }
+    await updateLikes(updatedBlog, blog.id)
+    setBlog({ ...blog, likes: blog.likes + 1 })
   }
   const deleteShow = async () => {
     await deleteBlog(blog.id)
