@@ -11,6 +11,7 @@ const mongoUrl =
   ENV !== 'test'
     ? process.env.REACT_APP_MONGODB_URI
     : process.env.REACT_APP_TEST_MONGODB_URI
+console.log(PORT,mongoUrl,'WHAT ARE THOOOSE')
 module.exports = {
   PORT,
   mongoUrl,
