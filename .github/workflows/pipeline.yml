@@ -35,7 +35,7 @@ jobs:
             npm run smallDev &
         env:
             REACT_APP_TEST_MONGODB_URI: ${{ secrets.REACT_APP_TEST_MONGODB_URI }}
-
+            REACT_APP_SECRET :  ${{ secrets.REACT_APP_SECRET}}
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
