@@ -29,13 +29,14 @@ jobs:
           npm run copy:ui
       - name: create env file
         run: |
+          cd server 
           touch .env
           echo ENGINE_API_KEY=${{ secrets.REACT_APP_TEST_MONGODB_URI }} >> .env
 
       - name: start Backend
         run: cd server &&
               npm run smallDev
-              
+
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
