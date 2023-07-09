@@ -27,13 +27,20 @@ jobs:
         run: cd server &&
           npm install &&
           npm run copy:ui
+      - name: create env file
+        run: |
+          touch .env
+          echo ENGINE_API_KEY=${{ secrets.REACT_APP_TEST_MONGODB_URI }} >> .env
+
+      - name: start Backend
+        run: cd server &&
+              npm run smallDev
+              
       - name: e2e tests
         uses: cypress-io/github-action@v5
         with:
            working-directory: client
            command: npm run test:e2e
-           start: npm run test:backend
-    
            wait-on: http://localhost:5000
       # - name: deploy to fly
       #   uses: superfly/flyctl-actions/setup-flyctl@master
