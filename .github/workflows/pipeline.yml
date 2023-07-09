@@ -27,49 +27,49 @@ jobs:
         run: cd server &&
           npm install &&
           npm run copy:ui
-      # - name:start server on the background 
-      # - name: e2e tests
-      #   uses: cypress-io/github-action@v5
-      #   with:
-      #     working-directory: client
-      #     command: npm run test:e2e
-      #     start: npm run test:backend
-
-      #     wait-on: http://localhost:5000
-      - name: deploy to fly
-        uses: superfly/flyctl-actions/setup-flyctl@master
-      - run: cd server && flyctl deploy --remote-only
-        env:
-          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
-
-
-  tag_release:
-     needs: [simple_deployment_pipeline]
-     runs-on: ubuntu-20.04
-     name: Bump verison
-     if: ${{ github.event_name == 'push' }}
-     steps:
-       - uses: actions/checkout@v3
+       - name:start server on the background 
+       - name: e2e tests
+         uses: cypress-io/github-action@v5
          with:
-           fetch-depth: "0"
-           ref: ${{ github.sha }} # required for better experience using
-         if: ${{!contains(join(toJson(github.event.commits.*.message)),'#skip')}}
-       - name: Bump version and push tag
-         uses: anothrNick/github-tag-action@1.64.0
-         env:
-           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-           DEFAULT_BUMP: patch
-       - name: Test Success
-         uses: rjstone/discord-webhook-notify@v1
-         if: success()
-         with:
-           severity: info
-           details: Test Succeeded!
-           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
-       - name: Test Failure
-         uses: rjstone/discord-webhook-notify@v1
-         if: failure()
-         with:
-           severity: error
-           details: Test Failed!
-           webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+           working-directory: client
+           command: npm run test:e2e
+           start: npm run test:backend
+    
+           wait-on: http://localhost:5000
+      # - name: deploy to fly
+      #   uses: superfly/flyctl-actions/setup-flyctl@master
+      # - run: cd server && flyctl deploy --remote-only
+      #   env:
+      #     FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+
+
+   tag_release:
+      needs: [simple_deployment_pipeline]
+      runs-on: ubuntu-20.04
+      name: Bump verison
+      if: ${{ github.event_name == 'push' }}
+      steps:
+        - uses: actions/checkout@v3
+          with:
+            fetch-depth: "0"
+            ref: ${{ github.sha }} # required for better experience using
+          if: ${{!contains(join(toJson(github.event.commits.*.message)),'#skip')}}
+        - name: Bump version and push tag
+          uses: anothrNick/github-tag-action@1.64.0
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+            DEFAULT_BUMP: patch
+        - name: Test Success
+          uses: rjstone/discord-webhook-notify@v1
+          if: success()
+          with:
+            severity: info
+            details: Test Succeeded!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}
+        - name: Test Failure
+          uses: rjstone/discord-webhook-notify@v1
+          if: failure()
+          with:
+            severity: error
+            details: Test Failed!
+            webhookUrl: ${{ secrets.DISCORD_WEBHOOK }}

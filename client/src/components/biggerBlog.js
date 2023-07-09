@@ -6,6 +6,7 @@ import Toggelable from './toggle'
 import BlogForm from '../Forms/blogForm'
 
 function BiggerBlogForm(createBlog, refOfBlog, data) {
+  const mockData = [...data].slice().sort((a, b) => a.likes < b.likes)
   return (
     <div>
       <Toggelable buttonLabel="new blog" ref={refOfBlog}>
@@ -14,17 +15,15 @@ function BiggerBlogForm(createBlog, refOfBlog, data) {
       <div>
         <Table className="table table-striped table-hover">
           <tbody>
-            {data
-                            && data
+            {mockData
+                            && mockData
                               .map((blog) => (
                                 <tr key={blog.id}>
                                   <td>
                                     <Link className="BlogButton" to={`/blogs/${blog.id}`}>{blog.title}</Link>
                                   </td>
                                 </tr>
-                              ))
-                              .slice()
-                              .sort((a, b) => a.id > b.id)}
+                              ))}
           </tbody>
         </Table>
       </div>

@@ -1,7 +1,9 @@
-DELETE    http://localhost:3001/api/login
+PUT    http://localhost:3003/api/blogs/64aaa63ad2bf8229c8e7cc81
 content-type: application/json
 
 {
-    "username":"JOJO",
-    "password":"313131"
+  "user": "64aaa63ad2bf8229c8e7cc79",
+   "url": "www.bombaboma.com",
+   "author": "agbuna",
+   "likes": 0
 }
