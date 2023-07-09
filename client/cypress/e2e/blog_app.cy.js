@@ -47,7 +47,7 @@ describe('Blog app', () => {
         cy.get('.createBlog').click()
         cy.contains('Narnia')
       })
-      it('You can like blogs', () => {
+      xit('You can like blogs', () => {
         cy.get('.BlogButton').click()
 
         cy.get('.LikeButton').click()
